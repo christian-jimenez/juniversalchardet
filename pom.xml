@@ -1,11 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.albfernandez</groupId>
+	
+	<groupId>org.mozilla</groupId>
 	<artifactId>juniversalchardet</artifactId>
 	<version>2.3.1-SNAPSHOT</version>
-	<url>https://github.com/albfernandez/juniversalchardet</url>
 	<packaging>jar</packaging>
+	
+	<url>https://github.com/christian-jimenez/juniversalchardet</url>
+	
 	<name>juniversalchardet</name>
 	<description>JUniversalChardet is a Java encoding detector library</description>
 
@@ -23,30 +28,42 @@
 			<url>http://www.gnu.org/licenses/lgpl.txt</url>
 		</license>
 	</licenses>
+	
 	<developers>
 		<developer>
-			<name>Alberto Fernández</name>
-			<email>infjaf@gmail.com</email>
-			<organization>Alberto Fernández</organization>
-			<organizationUrl>https://github.com/albfernandez/</organizationUrl>
+			<name>Christian Jiménez</name>
+			<email>christian.d.jimenez@gmail.com</email>
+			<organizationUrl>https://github.com/christian-jimenez/</organizationUrl>
 		</developer>
 	</developers>
+	
 	<scm>
-		<connection>scm:git:git@github.com:albfernandez/juniversalchardet.git</connection>
-		<developerConnection>scm:git:git@github.com:albfernandez/juniversalchardet.git</developerConnection>
-		<url>git@github.com:albfernandez/juniversalchardet.git</url>
+		<connection>scm:git:git@github.com:christian-jimenez/juniversalchardet.git</connection>
+		<developerConnection>scm:git:git@github.com:christian-jimenez/juniversalchardet.git</developerConnection>
+		<url>git@github.com:christian-jimenez/juniversalchardet.git</url>
 	</scm>
+	
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/albfernandez/juniversalchardet/issues</url>
+		<url>https://github.com/christian-jimenez/juniversalchardet/issues</url>
 	</issueManagement>
 
 	<properties>
-		<compiler.level>1.7</compiler.level>
+		<!-- ================================== Project =================================== -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>${java.specification.version}</maven.compiler.source>
+		<maven.compiler.target>${java.specification.version}</maven.compiler.target>
+		
+		<!-- ================================== Plugins =================================== -->
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<maven-source-plugin.version>3.1.0</maven-source-plugin.version>
+		<maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+		<maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+		<findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
+		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+		<nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
 	</properties>
-
 
 	<dependencies>
 		<dependency>
@@ -55,6 +72,7 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
@@ -63,23 +81,77 @@
 		</dependency>
 	</dependencies>
 
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>${compiler.level}</source>
-					<target>${compiler.level}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven-jar-plugin.version}</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Automatic-Module-Name>com.github.christian-jimenez.juniversalchardet</Automatic-Module-Name>
+						</manifestEntries>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+				<configuration>
+					<skipTests>${skip.unit.tests}</skipTests>
+				</configuration>
+			</plugin>
+			
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.5</version>
+				<version>${findbugs-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>findbugs-check</id>
@@ -93,52 +165,11 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
-				<configuration>
-					<archive>
-						<manifestEntries>
-							<Automatic-Module-Name>com.github.albfernandez.juniversalchardet</Automatic-Module-Name>
-						</manifestEntries>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.0</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.6</version>
+				<version>${maven-gpg-plugin.version}</version>
 				<configuration>
 					<keyname>${gpg.keyname}</keyname>
 					<passphraseServerId>${gpg.keyname}</passphraseServerId>
@@ -153,10 +184,11 @@
 					</execution>
 				</executions>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.6</version>
+				<version>${nexus-staging-maven-plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
 					<serverId>ossrh</serverId>
@@ -166,5 +198,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
