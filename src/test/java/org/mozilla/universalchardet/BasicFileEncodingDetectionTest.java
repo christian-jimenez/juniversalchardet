@@ -1,68 +1,72 @@
 package org.mozilla.universalchardet;
 
-import java.io.File;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.mozilla.universalchardet.common.ResourceLoaderTest;
+import org.mozilla.universalchardet.common.TestConstants;
 
-public class BasicFileEncodingDetectionTest {
-	
+public class BasicFileEncodingDetectionTest extends ResourceLoaderTest {
+
 	@Test
-	public void testUTF8 () throws IOException {
-		Assert.assertEquals("UTF-8", getFileEncoding("utf8.txt"));
+	public void testUTF8() throws IOException {
+		assertEquals(Constants.CHARSET_UTF_8, getFileEncoding(TestConstants.UTF8_FILE_NAME));
 	}
+
 	@Test
-	public void testUTF8N () throws IOException {
-		Assert.assertEquals("UTF-8", getFileEncoding("utf8n.txt"));
-	}
-	@Test
-	public void testUTF16LE () throws IOException {
-		Assert.assertEquals("UTF-16LE", getFileEncoding("utf16le.txt"));
-	}
-	@Test
-	public void testShifJis () throws IOException {
-		Assert.assertEquals("SHIFT_JIS", getFileEncoding("shiftjis.txt"));
+	public void testUTF8N() throws IOException {
+		assertEquals(Constants.CHARSET_UTF_8, getFileEncoding(TestConstants.UTF8N_FILE_NAME));
 	}
 	
 	@Test
-	public void testEUC () throws IOException {
-		Assert.assertEquals("EUC-JP", getFileEncoding("euc.txt"));
-	}	
+	public void testUTF8Emoji() throws IOException {
+		assertEquals(Constants.CHARSET_UTF_8, getFileEncoding(TestConstants.UTF8NEMOJI_FILE_NAME));
+	}
+
 	@Test
-	public void testISO2022JP () throws IOException {
-		Assert.assertEquals("ISO-2022-JP", getFileEncoding("iso2022jp.txt"));
+	public void testUTF16LE() throws IOException {
+		assertEquals(Constants.CHARSET_UTF_16LE, getFileEncoding(TestConstants.UTF16LE_FILE_NAME));
+	}
+
+	@Test
+	public void testShifJis() throws IOException {
+		assertEquals(Constants.CHARSET_SHIFT_JIS, getFileEncoding(TestConstants.SHIFT_JIS_FILE_NAME));
+	}
+
+	@Test
+	public void testEUC() throws IOException {
+		assertEquals(Constants.CHARSET_EUC_JP, getFileEncoding(TestConstants.EUC_JC_FILE_NAME));
 	}
 	
-	
-	
 	@Test
-	public void testBIG5 () throws IOException {
-		Assert.assertEquals("BIG5", getFileEncoding("big5.txt"));
+	public void testEUCTW() throws IOException {
+		assertEquals(Constants.CHARSET_EUC_TW, getFileEncoding(TestConstants.EUC_TW_FILE_NAME));
 	}
 	
-	@Test
-	public void testEUCTW () throws IOException {
-		Assert.assertEquals("EUC-TW", getFileEncoding("euctw.txt"));
-	}
 	@Test
 	public void testEUCKR() throws IOException {
-		Assert.assertEquals("EUC-KR", getFileEncoding("euckr.txt"));
+		assertEquals(Constants.CHARSET_EUC_KR, getFileEncoding(TestConstants.EUC_KR_FILE_NAME));
 	}
+
 	@Test
-	public void testWindows1255 () throws IOException {
-		Assert.assertEquals("WINDOWS-1255", getFileEncoding("windows1255.txt"));
+	public void testISO2022JP() throws IOException {
+		assertEquals(Constants.CHARSET_ISO_2022_JP, getFileEncoding(TestConstants.ISO_2022_JP_FILE_NAME));
 	}
-		 
-	
+
 	@Test
-	public void testUTF8Emoji () throws IOException {
-		Assert.assertEquals("UTF-8", getFileEncoding("utf8n-emoji.txt"));
+	public void testBIG5() throws IOException {
+		assertEquals(Constants.CHARSET_BIG5, getFileEncoding(TestConstants.BIG5_FILE_NAME));
 	}
-	
-	
-	private String getFileEncoding(String testFileName) throws IOException{
-        String fileName = "src/test/resources/" + testFileName;
-        return UniversalDetector.detectCharset(new File(fileName));
+
+	@Test
+	public void testWindows1255() throws IOException {
+		assertEquals(Constants.CHARSET_WINDOWS_1255, getFileEncoding(TestConstants.WINDOWS_1255_FILE_NAME));
 	}
+
+	private String getFileEncoding(final String testFileName) throws IOException {
+		return UniversalDetector.detectCharset(getFileResource(testFileName));
+	}
+
 }

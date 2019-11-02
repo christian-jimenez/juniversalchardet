@@ -1,22 +1,17 @@
 package org.mozilla.universalchardet;
 
-import java.io.File;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.mozilla.universalchardet.common.ResourceLoaderTest;
 
-public class TIS620BasicTest {
+public class TIS620BasicTest extends ResourceLoaderTest {
 
 	@Test
 	public void testTIS620() throws IOException {
-		Assert.assertEquals("TIS620", getFileEncoding("tis620.txt"));
+		assertEquals(Constants.CHARSET_TIS620, UniversalDetector.detectCharset(getFileResource("tis620.txt")));
 	}
-	
-	
-	
-	private String getFileEncoding(String testFileName) throws IOException{
-        String fileName = "src/test/resources/" + testFileName;
-        return UniversalDetector.detectCharset(new File(fileName));
-	}
+
 }

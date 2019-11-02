@@ -44,7 +44,7 @@ import java.nio.file.Paths;
 import org.mozilla.universalchardet.UniversalDetector;
 
 public class TestDetector {
-	public static void main(String[] args) throws java.io.IOException {
+	public static void main(final String[] args) throws java.io.IOException {
 		if (args.length != 1) {
 			System.err.println("Usage: java TestDetector FILENAME");
 			System.exit(1);
@@ -53,13 +53,12 @@ public class TestDetector {
 		byte[] buf = new byte[4096];
 		String fileName = args[0];
 		try (InputStream fis = Files.newInputStream(Paths.get(fileName))) {
-
 			// (1)
 			UniversalDetector detector = new UniversalDetector();
 
 			// (2)
 			int nread;
-			while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
+			while (((nread = fis.read(buf)) > 0) && !detector.isDone()) {
 				detector.handleData(buf, 0, nread);
 			}
 			// (3)
@@ -77,4 +76,5 @@ public class TestDetector {
 			detector.reset();
 		}
 	}
+
 }
