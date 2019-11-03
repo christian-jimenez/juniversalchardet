@@ -10,9 +10,16 @@ import org.mozilla.universalchardet.common.TestConstants;
 
 public class BasicFileEncodingDetectionTest extends ResourceLoaderTest {
 
+	private static final String WITH_BOM = " with BOM";
+	
 	@Test
 	public void testUTF8() throws IOException {
 		assertEquals(Constants.CHARSET_UTF_8, getFileEncoding(TestConstants.UTF8_FILE_NAME));
+	}
+	
+	@Test
+	public void testUTF8withBOM() throws IOException {
+		assertEquals(Constants.CHARSET_UTF_8 + WITH_BOM, getFileEncoding(TestConstants.UTF8_WIT_BOM_FILE_NAME));
 	}
 
 	@Test

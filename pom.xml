@@ -53,6 +53,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>${java.specification.version}</maven.compiler.source>
 		<maven.compiler.target>${java.specification.version}</maven.compiler.target>
+		<gpg.executable>C:\Program Files (x86)\GnuPG\bin\gpg.exe</gpg.executable>
 		
 		<!-- ================================== Plugins =================================== -->
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>

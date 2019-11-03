@@ -10,6 +10,7 @@ package org.mozilla.universalchardet.common;
 public final class TestConstants {
 
 	public static final String UTF8_FILE_NAME = "utf8.txt";
+	public static final String UTF8_WIT_BOM_FILE_NAME = "utf8-with-BOM.txt";
 	public static final String UTF8N_FILE_NAME = "utf8n.txt";
 	public static final String UTF8NEMOJI_FILE_NAME = "utf8n-emoji.txt";
 
